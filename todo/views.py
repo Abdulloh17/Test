@@ -2,23 +2,23 @@ from django.shortcuts import render
 from rest_framework import generics
 
 from .models import User, ToDo
-from .serializers import UserSerializer, ToDoRegisterSerializer, ToDoSerializer, UserRegisterSerializer
+from .serializers import UserSerializer, ToDoSerializer
 
 # Create your views here.
-
-class ToDoListApi(generics.ListAPIView):
+class TodoCreateApi(generics.CreateAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
 
-class TodoCreateApi(generics.CreateAPIView):
+class ToDoDetailApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = ToDo.objects.all()
-    serializer_class = ToDoRegisterSerializer
+    serializer_class = ToDoSerializer
 
-class UserListApi(generics.ListAPIView):
+
+class UserCreateApi(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer    
 
-class UserRegisterApi(generics.CreateAPIView):
+class UserDetailApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
-    serializer_class = UserRegisterSerializer
+    serializer_class = UserSerializer
 

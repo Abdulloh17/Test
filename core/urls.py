@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from todo.views import TodoCreateApi, ToDoListApi, UserListApi, UserRegisterApi
+from todo.views import TodoCreateApi, ToDoDetailApi, UserCreateApi, UserDetailApi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/todos/', ToDoListApi.as_view(), name='todos'),
-    path('api/createtodo/', TodoCreateApi.as_view(), name='create-todo'),
-    path('api/users/', UserListApi.as_view(), name='users'),
-    path('api/createuser/', UserRegisterApi.as_view(), name='user-register'),
+    path('api/todos/', TodoCreateApi.as_view(), name='todos'),
+    path('api/todos/<int:pk>', ToDoDetailApi.as_view(), name='crud-todo'),
+    path('api/users/', UserCreateApi.as_view(), name='users'),
+    path('api/users/<int:pk>', UserDetailApi.as_view(), name='crud-users'),
 ]
