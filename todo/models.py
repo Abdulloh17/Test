@@ -1,10 +1,16 @@
 from django.db import models
 
+from users.models import User
 
 # Create your models here.
 
 
 class ToDo(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь поста",
+    )
     title = models.CharField(
         max_length= 255,
         verbose_name='Названия задания',
