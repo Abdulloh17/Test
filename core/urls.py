@@ -14,13 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from todo.views import TodoCreateApi, ToDoDetailApi, UserCreateApi, UserDetailApi
+from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/todos/', TodoCreateApi.as_view(), name='todos'),
-    path('api/todos/<int:pk>', ToDoDetailApi.as_view(), name='crud-todo'),
-    path('api/users/', UserCreateApi.as_view(), name='users'),
-    path('api/users/<int:pk>', UserDetailApi.as_view(), name='crud-users'),
+    path('', include('todo.urls')),
+    path('', include('users.urls')),
+    
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

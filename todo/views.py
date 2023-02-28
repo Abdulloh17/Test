@@ -1,8 +1,11 @@
 from django.shortcuts import render
+
 from rest_framework import generics
 
-from .models import User, ToDo
-from .serializers import UserSerializer, ToDoSerializer
+from .models import ToDo
+from .serializers import ToDoSerializer
+# from rest_framework.permissions import IsAuthenticated
+
 
 # Create your views here.
 class TodoCreateApi(generics.CreateAPIView):
@@ -12,13 +15,9 @@ class TodoCreateApi(generics.CreateAPIView):
 class ToDoDetailApi(generics.RetrieveUpdateDestroyAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+    # permission_classes = (IsAuthenticated, )
 
 
-class UserCreateApi(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer    
 
-class UserDetailApi(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
+        
