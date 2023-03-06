@@ -1,6 +1,7 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
 
+
 from .serializers import UserSerializer, UsersDetailSerializer
 from .models import User
 from .permissions import UserPermission

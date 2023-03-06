@@ -1,6 +1,7 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework import mixins
+from rest_framework import mixins, status
 from django_filters import rest_framework as filter
+from rest_framework.response import Response
 
 
 from .models import ToDo
@@ -25,7 +26,16 @@ class TodoApiViewSet(GenericViewSet,
     filterset_class = TodoFilter
     
                     
-    
+class DestroyAll(GenericViewSet,
+                 mixins.DestroyModelMixin):
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoSerializer
+    permission_classes = (TodoPermission, )
+
+    def destroy(self, request, *args, **kwargs):
+        queryset = ToDo.objects.filter(user=request.user)
+        queryset = [i for i in queryset.delete()]
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
