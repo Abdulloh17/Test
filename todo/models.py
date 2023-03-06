@@ -9,6 +9,7 @@ class ToDo(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name='users_todos',
         verbose_name="Пользователь поста",
     )
     title = models.CharField(
