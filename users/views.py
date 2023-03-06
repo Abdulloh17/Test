@@ -2,7 +2,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
 
 
-from .serializers import UserSerializer, UsersDetailSerializer
+from .serializers import UserSerializer, UsersDetailSerializer, UserRegisterSerializer
 from .models import User
 from .permissions import UserPermission
 
@@ -20,6 +20,8 @@ class UserApiViewSet(GenericViewSet,
     def get_serializer_class(self):
         if self.action in ('retrieve', ):
             return UsersDetailSerializer
+        if self.action in ('create',):
+            return UserRegisterSerializer
         return UserSerializer
 
 
