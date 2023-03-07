@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # rest
+    'rest_framework',
+
+    # apps
+    'apps.users',
+    'apps.todo',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +126,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'users.User'
 
 
 # Default primary key field type
