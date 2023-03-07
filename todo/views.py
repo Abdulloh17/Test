@@ -1,17 +1,15 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework import mixins, status
-from django_filters import rest_framework as filter
+from rest_framework import mixins
+from rest_framework import filters
 from rest_framework.response import Response
+from rest_framework import generics
+
 
 
 from .models import ToDo
 from .serializers import ToDoSerializer
 from .permissions import TodoPermission
 
-class TodoFilter(filter.FilterSet):
-    class Meta:
-        model = ToDo
-        fields = ('user', 'title')
 
 class TodoApiViewSet(GenericViewSet,
                      mixins.CreateModelMixin,
@@ -22,20 +20,23 @@ class TodoApiViewSet(GenericViewSet,
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
     permission_classes = (TodoPermission, )
-    filter_backends = (filter.DjangoFilterBackend, )
-    filterset_class = TodoFilter
+    filter_backends = [filters.SearchFilter]
+    search_fields = ('title', 'description')
+
+
     
                     
-class DestroyAll(GenericViewSet,
-                 mixins.DestroyModelMixin):
+class TodoAllDel(generics.DestroyAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
     permission_classes = (TodoPermission, )
 
-    def destroy(self, request, *args, **kwargs):
-        queryset = ToDo.objects.filter(user=request.user)
-        queryset = [i for i in queryset.delete()]
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, *args, **kwargs):
+        todo = ToDo.objects.filter(user = request.user)
+        todo = [i for i in todo.delete()]
+
+        return Response({'delete': 'Все таски удалены'})
 
 
 

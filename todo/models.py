@@ -29,7 +29,8 @@ class ToDo(models.Model):
         verbose_name='Время создания'
     )
     image = models.ImageField(
-        verbose_name='Добавление фото'
+        verbose_name='Добавление фото',
+        blank=True, null=True,
     )
 
     def __str__(self):
